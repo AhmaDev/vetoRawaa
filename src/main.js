@@ -36,8 +36,8 @@ Icon.Default.mergeOptions({
 });
 Vue.config.productionTip = false;
 // Vue.prototype.$baseUrl = 'http://localhost:3000/';
-Vue.prototype.$baseUrl = "https://api.rawaa-co.co/";
-Vue.prototype.$trackBaseUrl = "https://track.rawaa-co.co/";
+Vue.prototype.$baseUrl = "https://api.rawaa-co.com/";
+Vue.prototype.$trackBaseUrl = "https://track.rawaa-co.com/";
 Vue.prototype.$appVersion = "1.6.0";
 Vue.http = Vue.prototype.$http = axios;
 Vue.prototype.$background = "#007BFF";
