@@ -70,7 +70,10 @@
         </v-col>
         <v-col cols="2">
           <v-text-field
-            label="عدد القطع في الكارتون"
+            prefix="الرصيد الاولي:  "
+            background-color="red"
+            color="white"
+            dark
             type="number"
             outlined
             hide-details
