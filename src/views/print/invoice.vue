@@ -38,7 +38,7 @@
         <table class="table" border="1" cellspacing="0" width="100%">
           <thead>
             <tr>
-              <th>#</th>
+              <th>رمز المادة</th>
               <th>المادة</th>
               <th>الكمية</th>
               <th>سعر</th>
@@ -54,7 +54,7 @@
               v-for="(item, index) in invoice.items"
               :key="item.itemId + '_' + index"
             >
-              <td>{{ index + 1 }}</td>
+              <td>{{ item.itemCode }}</td>
               <td>{{ item.itemName }}</td>
               <td>{{ item.count.toLocaleString() }}</td>
               <td>{{ item.price.toLocaleString() }}</td>
