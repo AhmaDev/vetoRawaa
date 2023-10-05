@@ -1,14 +1,8 @@
 <template>
   <div ref="print" id="homePage" class="pa-10">
     <template v-for="(invoice, index) in invoices">
-      <v-sheet
-        v-if="invoice.items[0] != null"
-        style="margin-bottom: 20px"
-        color="white"
-        :key="invoice.idInvoice"
-        class="pa-10 sheet"
-        elevation="4"
-      >
+      <v-sheet v-if="invoice.items[0] != null" style="margin-bottom: 20px" color="white" :key="invoice.idInvoice"
+        class="pa-10 sheet" elevation="4">
         <img src="@/assets/header.png" width="100%" alt="" />
 
         <small>تسلسل: {{ index + 1 }}</small>
@@ -50,10 +44,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr
-              v-for="(item, index) in invoice.items"
-              :key="item.itemId + '_' + index"
-            >
+            <tr v-for="(item, index) in invoice.items" :key="item.itemId + '_' + index">
               <td>{{ item.itemCode }}</td>
               <td>{{ item.itemName }}</td>
               <td>{{ item.count.toLocaleString() }}</td>
@@ -87,6 +78,10 @@
             </tr>
           </tbody>
         </table>
+        <br />
+        <b>ملاحظات: </b>
+        <br />
+        {{ invoice.notice.toLocaleString() }}
         <br />
       </v-sheet>
     </template>
@@ -133,6 +128,7 @@ export default {
   padding: 10px !important;
   font-size: 14px !important;
 }
+
 .sheet {
   page-break-after: always;
   direction: rtl !important;
@@ -151,13 +147,16 @@ export default {
 @media print {
   @page {
     size: A4;
+
     @bottom-left {
       content: counter(page) " of " counter(pages);
     }
   }
+
   * {
     font-size: 12px !important;
   }
+
   .sheet {
     display: block;
   }

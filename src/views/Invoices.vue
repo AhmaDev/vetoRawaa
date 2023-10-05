@@ -13,90 +13,33 @@
     <v-card no-elevation class="pa-5">
       <v-row>
         <v-col cols="3">
-          <v-autocomplete
-            hide-details
-            outlined
-            dense
-            clearable
-            :disabled="userInfo.roleId == 2"
-            v-model="search.invoiceType"
-            label="نوع الفاتورة"
-            :items="invoiceTypes"
-            item-text="invoiceTypeName"
-            item-value="idInvoiceType"
-          ></v-autocomplete>
+          <v-autocomplete hide-details outlined dense clearable :disabled="userInfo.roleId == 2"
+            v-model="search.invoiceType" label="نوع الفاتورة" :items="invoiceTypes" item-text="invoiceTypeName"
+            item-value="idInvoiceType"></v-autocomplete>
         </v-col>
         <v-col cols="3">
-          <v-autocomplete
-            hide-details
-            outlined
-            dense
-            clearable
-            v-model="search.customerId"
-            label="الزبون"
-            :items="customers"
-            item-text="storeName"
-            item-value="idCustomer"
-          ></v-autocomplete>
+          <v-autocomplete hide-details outlined dense clearable v-model="search.customerId" label="الزبون"
+            :items="customers" item-text="storeName" item-value="idCustomer"></v-autocomplete>
         </v-col>
         <v-col cols="3">
-          <v-autocomplete
-            outlined
-            hide-details
-            dense
-            clearable
-            v-model="search.delegateId"
-            label="المندوب"
-            :items="users.delegates"
-            item-text="username"
-            item-value="idUser"
-          ></v-autocomplete>
+          <v-autocomplete outlined hide-details dense clearable v-model="search.delegateId" label="المندوب"
+            :items="users.delegates" item-text="username" item-value="idUser"></v-autocomplete>
         </v-col>
         <v-col cols="3">
-          <v-autocomplete
-            outlined
-            hide-details
-            dense
-            clearable
-            v-model="search.deliveryId"
-            label="الموزع"
-            :items="users.deliveries"
-            item-text="username"
-            item-value="idUser"
-          ></v-autocomplete>
+          <v-autocomplete outlined hide-details dense clearable v-model="search.deliveryId" label="الموزع"
+            :items="users.deliveries" item-text="username" item-value="idUser"></v-autocomplete>
         </v-col>
         <v-col cols="3">
-          <v-text-field
-            label="رقم الفاتورة"
-            dense
-            clearable
-            v-model="search.invoiceId"
-            hide-details
-            outlined
-            type="number"
-          ></v-text-field>
+          <v-text-field label="رقم الفاتورة" dense clearable v-model="search.invoiceId" hide-details outlined
+            type="number"></v-text-field>
         </v-col>
         <v-col cols="3">
-          <v-text-field
-            label="من تاريخ"
-            dense
-            clearable
-            v-model="search.dateFrom"
-            hide-details
-            outlined
-            type="date"
-          ></v-text-field>
+          <v-text-field label="من تاريخ" dense clearable v-model="search.dateFrom" hide-details outlined
+            type="date"></v-text-field>
         </v-col>
         <v-col cols="3">
-          <v-text-field
-            label="الى تاريخ"
-            dense
-            clearable
-            v-model="search.dateTo"
-            hide-details
-            outlined
-            type="date"
-          ></v-text-field>
+          <v-text-field label="الى تاريخ" dense clearable v-model="search.dateTo" hide-details outlined
+            type="date"></v-text-field>
         </v-col>
         <v-col>
           <v-btn @click="performSearch()" dark :color="$background" block>
@@ -112,30 +55,16 @@
     </v-card>
     <br />
     <v-card no-elevation>
-      <v-data-table
-        v-model="selectedInvoices"
-        :headers="headers"
-        :items="invoices"
-        item-key="idInvoice"
-        :items-per-page="20"
-        show-select
-        class="elevation-0"
-      >
+      <v-data-table v-model="selectedInvoices" :headers="headers" :items="invoices" item-key="idInvoice"
+        :items-per-page="20" show-select class="elevation-0">
         <template v-slot:[`item.invoiceTypeName`]="{ item }">
-          <v-chip
-            :color="item.invoiceFunction == 'minus' ? 'green' : 'red'"
-            dark
-            small
-          >
+          <v-chip :color="item.invoiceFunction == 'minus' ? 'green' : 'red'" dark small>
             {{ item.invoiceTypeName }}
           </v-chip>
         </template>
         <template v-slot:[`item.totalPrice`]="{ item }">
-          <div
-            :class="
-              item.invoiceFunction == 'minus' ? 'green--text' : 'red--text'
-            "
-          >
+          <div :class="item.invoiceFunction == 'minus' ? 'green--text' : 'red--text'
+            ">
             <b v-if="item.totalPrice != null">{{
               item.totalPrice.toLocaleString()
             }}</b>
@@ -147,20 +76,14 @@
           <b class="grey--text">{{ item.customerId }}</b>
         </template>
         <template v-slot:[`item.duplicate`]="{ item }">
-          <v-chip
-            small
-            v-if="
-              invoices.filter(
-                (e) =>
-                  e.customerId == item.customerId &&
-                  e.totalPrice == item.totalPrice &&
-                  e.creationFixedDate == item.creationFixedDate &&
-                  e.invoiceTypeId == item.invoiceTypeId
-              ).length > 1
-            "
-            color="error"
-            >مكرر</v-chip
-          >
+          <v-chip small v-if="invoices.filter(
+            (e) =>
+              e.customerId == item.customerId &&
+              e.totalPrice == item.totalPrice &&
+              e.creationFixedDate == item.creationFixedDate &&
+              e.invoiceTypeId == item.invoiceTypeId
+          ).length > 1
+            " color="error">مكرر</v-chip>
         </template>
 
         <template v-slot:[`item.creationFixedDate`]="{ item }">
@@ -170,32 +93,18 @@
         </template>
 
         <template v-slot:[`item.deliveryStatus`]="{ item }">
-          <v-stepper
-            width="350"
-            style="background-color: transparent !important"
-            elevation="0"
-            alt-labels
-          >
+          <v-stepper width="350" style="background-color: transparent !important" elevation="0" alt-labels>
             <v-stepper-header>
-              <v-stepper-step
-                color="green"
-                complete-icon="mdi-check"
-                :title="item.deliveryName"
-                step="1"
-                >استلام</v-stepper-step
-              >
+              <v-stepper-step color="green" complete-icon="mdi-check" :title="item.deliveryName"
+                step="1">استلام</v-stepper-step>
 
               <v-divider></v-divider>
 
-              <v-stepper-step color="green" complete-icon="mdi-check" step="2"
-                >في الطريق</v-stepper-step
-              >
+              <v-stepper-step color="green" complete-icon="mdi-check" step="2">في الطريق</v-stepper-step>
 
               <v-divider></v-divider>
 
-              <v-stepper-step color="green" complete-icon="mdi-check" step="3"
-                >تم التوصيل</v-stepper-step
-              >
+              <v-stepper-step color="green" complete-icon="mdi-check" step="3">تم التوصيل</v-stepper-step>
             </v-stepper-header>
           </v-stepper>
         </template>
@@ -210,16 +119,12 @@
           <v-menu v-if="checkPermission('invoice_delete')" offset-y>
             <template v-bind="item" v-slot:activator="{ on, attrs }">
               <v-btn v-bind="attrs" v-on="on" icon>
-                <v-icon color="red" title="حذف الفاتورة"
-                  >mdi-delete-outline</v-icon
-                >
+                <v-icon color="red" title="حذف الفاتورة">mdi-delete-outline</v-icon>
               </v-btn>
             </template>
             <v-list>
               <v-list-item @click="deleteInvoice(item.idInvoice)">
-                <v-list-item-title
-                  >اضغط هنا لتأكيد حذف الفاتورة</v-list-item-title
-                >
+                <v-list-item-title>اضغط هنا لتأكيد حذف الفاتورة</v-list-item-title>
               </v-list-item>
             </v-list>
           </v-menu>
@@ -227,10 +132,7 @@
       </v-data-table>
     </v-card>
 
-    <v-bottom-navigation
-      v-if="selectedInvoices.length > 0 && checkPermission('invoices_edit')"
-      fixed
-    >
+    <v-bottom-navigation v-if="selectedInvoices.length > 0 && checkPermission('invoices_edit')" fixed>
       <v-btn @click="dialogs.setDelivery = true">
         <span>تحديد موزع</span>
         <v-icon>mdi-van-utility</v-icon>
@@ -265,12 +167,7 @@
       <v-card>
         <v-card-title class="text-h5"> قم بأختيار الموزع </v-card-title>
         <v-card-text>
-          <v-autocomplete
-            v-model="selectedDeliveryId"
-            :items="users.deliveries"
-            item-text="username"
-            item-value="idUser"
-          >
+          <v-autocomplete v-model="selectedDeliveryId" :items="users.deliveries" item-text="username" item-value="idUser">
           </v-autocomplete>
         </v-card-text>
         <v-card-actions>
@@ -289,12 +186,7 @@
       <v-card>
         <v-card-title class="text-h5"> قم بأختيار الجهة </v-card-title>
         <v-card-text>
-          <v-autocomplete
-            v-model="selectedDelegateId"
-            :items="users.delegates"
-            item-text="username"
-            item-value="idUser"
-          >
+          <v-autocomplete v-model="selectedDelegateId" :items="users.delegates" item-text="username" item-value="idUser">
           </v-autocomplete>
         </v-card-text>
         <v-card-actions>
@@ -366,10 +258,10 @@ export default {
     },
   }),
   created: function () {
-    this.getCurrentDate().then((value) => {
-      this.search.dateFrom = value;
-      this.search.dateTo = value;
-    });
+    // this.getCurrentDate().then((value) => {
+    //   this.search.dateFrom = value;
+    //   this.search.dateTo = value;
+    // });
     this.fetch();
   },
   methods: {
@@ -620,5 +512,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
